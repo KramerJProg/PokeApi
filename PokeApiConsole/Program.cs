@@ -15,7 +15,7 @@ namespace PokeApiConsole
                 // Pokemon result = await client.GetPokemonByName("BULBASAUR");
                 Pokemon result = await client.GetPokemonById(1);
 
-                Console.WriteLine($"Pokemon Id: {result.id}" +
+                Console.WriteLine($"Pokemon Id: {result.Id}" +
                                   $"\nName: {result.Name}" +
                                   $"\nWeight (In Hectograms): {result.Weight}" +
                                   $"\nHeight (In Inches): {result.Height}");

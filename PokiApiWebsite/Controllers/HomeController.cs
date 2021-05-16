@@ -32,17 +32,17 @@ namespace PokiApiWebsite.Controllers
 
             resultMoves.Sort();
 
-            // Add move list
-            // Refactor prop names
-            PokedexEntryViewModel entry = new PokedexEntryViewModel()
+            var entry = new PokedexEntryViewModel()
             {
-                Id = result.id,
+                Id = result.Id,
                 Name = result.Name,
                 Height = result.Height.ToString(),
                 Weight = result.Weight.ToString(),
-                PokedexImageUrl = result.sprites.FrontDefault,
+                PokedexImageUrl = result.Sprites.FrontDefault,
                 MoveList = resultMoves
             };
+
+            entry.Name = entry.Name.First().ToString().ToUpper() + entry.Name[1..];
 
             return View(entry);
         }
