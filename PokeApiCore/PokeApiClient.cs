@@ -3,6 +3,7 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace PokeApiCore
 {
@@ -24,27 +25,36 @@ namespace PokeApiCore
         public async Task<Pokemon> GetPokemonByName(string name)
         {
             name = name.ToLower(); // Pokemon must be lowercase.
-
-             string url = $"https://pokeapi.co/api/v2/pokemon/{name}";
-             HttpResponseMessage response = await client.GetAsync(url);
-             if (response.IsSuccessStatusCode)
-             {
-                 string responseBody = await response.Content.ReadAsStringAsync();
-                 return JsonConvert.DeserializeObject<Pokemon>(responseBody);
-             }
-             else if (response.StatusCode == HttpStatusCode.NotFound)
-             {
-                 throw new ArgumentException($"{name} does not exist.");
-             }
-             else
-             {
-                 throw new HttpRequestException();
-             }
+            return await GetPokemonByNameOrId(name);
         }
 
-        public void GetPokemonById(int id)
+        private static async Task<Pokemon> GetPokemonByNameOrId(string name)
         {
-            throw new NotImplementedException();
+            string url = $"https://pokeapi.co/api/v2/pokemon/{name}";
+            HttpResponseMessage response = await client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Pokemon>(responseBody);
+            }
+            else if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new ArgumentException($"{name} does not exist.");
+            }
+            else
+            {
+                throw new HttpRequestException();
+            }
+        }
+
+        /// <summary>
+        /// Gets a Pokemon by their Pokedex ID number
+        /// </summary>
+        /// <param name="id">The id of the Pokemon</param>
+        /// <returns></returns>
+        public async Task<Pokemon> GetPokemonById(int id)
+        {
+            return await GetPokemonByNameOrId(id.ToString());
         }
     }
 }
