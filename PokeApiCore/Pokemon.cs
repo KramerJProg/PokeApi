@@ -12,7 +12,7 @@ namespace PokeApiCore
         private const double InchesPerDecimeter = 3.937;
         private int height1;
 
-        public int id { get; set; }
+        public string id { get; set; }
         public string name { get; set; }
 
         /// <summary>
