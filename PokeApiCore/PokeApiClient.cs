@@ -22,6 +22,7 @@ namespace PokeApiCore
                 // Must end with forward slash
                 BaseAddress = new Uri("https://pokeapi.co/api/v2/")
             };
+            client.DefaultRequestHeaders.Add("User-Agent", "Kramer's PokeAPI");
         }
 
         /// <summary>
